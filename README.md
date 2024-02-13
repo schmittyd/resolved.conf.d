@@ -169,21 +169,44 @@ There a several ways these drop-ins can be used. First of all, the `00` at the s
 
 ### Create directory to clone repository to:
 
-`mkdir -v ~/git` or `sudo mkdir -v ~/git` *if required*
+```console
+mkdir -v ~/git
+```
+or
+```console
+sudo mkdir -v ~/git
+```
+*if required*
 
 ### Install Git (if not already installed):
 
-`apt install git` or `sudo apt install git` *if required*
+```console
+apt install git
+```
+or
+```console
+sudo apt install git
+```
+*if required*
 
 ### Clone repository:
 
-`git clone https://github.com/schmittyd/resolved.conf.d.git` or `sudo git clone https://github.com/schmittyd/resolved.conf.d.git` *if required*
+```console
+git clone https://github.com/schmittyd/resolved.conf.d.git
+```
+or
+```console
+sudo git clone https://github.com/schmittyd/resolved.conf.d.git
+```
+*if required*
 
 ### Copy required config to /etc/systemd/resolved.conf.d:
 
 #### Basic single DNS service
 
-`cd ~/git/resolved.conf.d/combined`
+```console
+cd ~/git/resolved.conf.d/combined
+```
 
 Select a configuration to use
   - `00-resolved-dns-fallback_dns.conf` - additional configuration is required
@@ -193,20 +216,29 @@ Select a configuration to use
 
 Example using Cloudflare's DNS & Fallback DNS servers
 
-`cp -v 00-resolved-dns-fallback_dns-cloudflare.conf /etc/systemd/resolved.conf.d/00-resolved-dns-fallback_dns-cloudflare.conf`
+```console
+cp -v 00-resolved-dns-fallback_dns-cloudflare.conf /etc/systemd/resolved.conf.d/00-resolved-dns-fallback_dns-cloudflare.conf
+```
 
 or
 
-`sudo cp -v 00-resolved-dns-fallback_dns-cloudflare.conf /etc/systemd/resolved.conf.d/00-resolved-dns-fallback_dns-cloudflare.conf` *if required*
+```console
+sudo cp -v 00-resolved-dns-fallback_dns-cloudflare.conf /etc/systemd/resolved.conf.d/00-resolved-dns-fallback_dns-cloudflare.conf
+```
+*if required*
 
 
 Restart DNS Resolver service
 
-`sudo systemctl restart systemd-resolved`
+```console
+sudo systemctl restart systemd-resolved
+```
 
 Ping google.com to test DNS resolution
 
-`ping -c 3 google.com`
+```console
+ping -c 3 google.com
+```
 
 If DNS Resolution is working, you should see similar results
 
@@ -222,7 +254,9 @@ If DNS Resolution is working, you should see similar results
 
 #### Basic two DNS service using priorty
 
-`cd ~/git/resolved.conf.d/combined`
+```console
+cd ~/git/resolved.conf.d/combined
+```
 
 Select two configurations to use
   - `00-resolved-dns-fallback_dns.conf` - additional configuration is required
@@ -232,124 +266,142 @@ Select two configurations to use
 
 Example using Cloudflare's DNS & Fallback DNS servers as highest priorty and Google's DNS & Fallback DNS servers as a lower priority
 
-`cp -v 00-resolved-dns-fallback_dns-cloudflare.conf /etc/systemd/resolved.conf.d/00-resolved-dns-fallback_dns-cloudflare.conf && cp -v 00-resolved-dns-fallback_dns-google.conf /etc/systemd/resolved.conf.d/01-resolved-dns-fallback_dns-google.conf`
+```console
+cp -v 00-resolved-dns-fallback_dns-cloudflare.conf /etc/systemd/resolved.conf.d/00-resolved-dns-fallback_dns-cloudflare.conf && cp -v 00-resolved-dns-fallback_dns-google.conf /etc/systemd/resolved.conf.d/01-resolved-dns-fallback_dns-google.conf
+```
 
 or
 
-`sudo cp -v 00-resolved-dns-fallback_dns-cloudflare.conf /etc/systemd/resolved.conf.d/00-resolved-dns-fallback_dns-cloudflare.conf && sudo cp -v 00-resolved-dns-fallback_dns-google.conf /etc/systemd/resolved.conf.d/01-resolved-dns-fallback_dns-google.conf` *if required*
+```console
+sudo cp -v 00-resolved-dns-fallback_dns-cloudflare.conf /etc/systemd/resolved.conf.d/00-resolved-dns-fallback_dns-cloudflare.conf && sudo cp -v 00-resolved-dns-fallback_dns-google.conf /etc/systemd/resolved.conf.d/01-resolved-dns-fallback_dns-google.conf
+```
+*if required*
 
 Restart DNS Resolver service
 
-`sudo systemctl restart systemd-resolved`
+```console
+sudo systemctl restart systemd-resolved
+```
 
 Ping google.com to test DNS resolution
 
-`ping -c 3 google.com`
+```console
+ping -c 3 google.com
+```
 
 If DNS Resolution is working, you should see similar results
 
-    PING google.com (142.250.70.142) 56(84) bytes of data.
-    64 bytes from mel04s01-in-f14.1e100.net (142.250.70.142): icmp_seq=1 ttl=59 time=14.5 ms
-    64 bytes from mel04s01-in-f14.1e100.net (142.250.70.142): icmp_seq=2 ttl=59 time=15.2 ms
-    64 bytes from mel04s01-in-f14.1e100.net (142.250.70.142): icmp_seq=3 ttl=59 time=14.5 ms
+```
+PING google.com (142.250.70.142) 56(84) bytes of data.
+64 bytes from mel04s01-in-f14.1e100.net (142.250.70.142): icmp_seq=1 ttl=59 time=14.5 ms
+64 bytes from mel04s01-in-f14.1e100.net (142.250.70.142): icmp_seq=2 ttl=59 time=15.2 ms
+64 bytes from mel04s01-in-f14.1e100.net (142.250.70.142): icmp_seq=3 ttl=59 time=14.5 ms
 
-    --- google.com ping statistics ---
-    3 packets transmitted, 3 received, 0% packet loss, time 2002ms
-    rtt min/avg/max/mdev = 14.480/14.720/15.185/0.328 ms
-
+--- google.com ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2002ms
+rtt min/avg/max/mdev = 14.480/14.720/15.185/0.328 ms
+```
 :memo: **Note:** All other DNS resolver options will be set to resolved defaults
 
 #### Using /etc/systemd/resolved.conf.d/combined/00-resolved-dns-fallback_dns.conf, /etc/systemd/resolved.conf.d/individual/00-resolved-dns.conf, and /etc/systemd/resolved.conf.d/individual/00-resolved-dns_fallback.conf
 
 :memo: **Note:** For this configuration you need primary and secondary DNS IP addresses from either your ISP, or DNS services like OpenDNS. For this example OpenDNS will be used - Primary: 208.67.222.222 Secondary: 208.67.220.220
 
-`cp -v 00-resolved-dns-fallback_dns.conf /etc/systemd/resolved.conf.d/00-resolved-dns-fallback_dns.conf`
+```console
+cp -v 00-resolved-dns-fallback_dns.conf /etc/systemd/resolved.conf.d/00-resolved-dns-fallback_dns.conf
+```
 
 or
 
-`sudo cp -v 00-resolved-dns-fallback_dns.conf /etc/systemd/resolved.conf.d/00-resolved-dns-fallback_dns.conf` *if required*
+```console
+sudo cp -v 00-resolved-dns-fallback_dns.conf /etc/systemd/resolved.conf.d/00-resolved-dns-fallback_dns.conf
+```
+
+ *if required*
 
 Edit /etc/systemd/resolved.conf.d/00-resolved-dns-fallback_dns.conf
 
-`sudo nano /etc/systemd/resolved.conf.d/00-resolved-dns-fallback_dns.conf`
+    sudo nano /etc/systemd/resolved.conf.d/00-resolved-dns-fallback_dns.conf
 
-    # DNS
+```
+# DNS
+# Some examples of DNS servers which may be used for DNS= and FallbackDNS=:
+# Cloudflare: 1.1.1.1#cloudflare-dns.com 1.0.0.1#cloudflare-dns.com 2606:4700:4700::1111#cloudflare-dns.com 2606:4700:4700::1001#cloudflare-dns.com
+# Google:   8.8.8.8#dns.google 8.8.4.4#dns.google 2001:4860:4860::8888#dns.google 2001:4860:4860::8844#dns.google
+# Quad9:   9.9.9.9#dns.quad9.net 149.112.112.112#dns.quad9.net 2620:fe::fe#dns.quad9.net 2620:fe::9#dns.quad9.net
 
-    # Some examples of DNS servers which may be used for DNS= and FallbackDNS=:
-    # Cloudflare: 1.1.1.1#cloudflare-dns.com 1.0.0.1#cloudflare-dns.com 2606:4700:4700::1111#cloudflare-dns.com 2606:4700:4700::1001#cloudflare-dns.com
-    # Google:   8.8.8.8#dns.google 8.8.4.4#dns.google 2001:4860:4860::8888#dns.google 2001:4860:4860::8844#dns.google
-    # Quad9:   9.9.9.9#dns.quad9.net 149.112.112.112#dns.quad9.net 2620:fe::fe#dns.quad9.net 2620:fe::9#dns.quad9.net
+# Default: 
 
-    # Default: 
-
-    DNS=
+DNS=
 
 
 
-    # FALLBACK DNS
+# FALLBACK DNS
 
-    # Some examples of DNS servers which may be used for DNS= and FallbackDNS=:
-    # Cloudflare: 1.1.1.1#cloudflare-dns.com 1.0.0.1#cloudflare-dns.com 2606:4700:4700::1111#cloudflare-dns.com 2606:4700:4700::1001#cloudflare-dns.com
-    # Google:   8.8.8.8#dns.google 8.8.4.4#dns.google 2001:4860:4860::8888#dns.google 2001:4860:4860::8844#dns.google
-    # Quad9:   9.9.9.9#dns.quad9.net 149.112.112.112#dns.quad9.net 2620:fe::fe#dns.quad9.net 2620:fe::9#dns.quad9.net
+# Some examples of DNS servers which may be used for DNS= and FallbackDNS=:
+# Cloudflare: 1.1.1.1#cloudflare-dns.com 1.0.0.1#cloudflare-dns.com 2606:4700:4700::1111#cloudflare-dns.com 2606:4700:4700::1001#cloudflare-dns.com
+# Google:   8.8.8.8#dns.google 8.8.4.4#dns.google 2001:4860:4860::8888#dns.google 2001:4860:4860::8844#dns.google
+# Quad9:   9.9.9.9#dns.quad9.net 149.112.112.112#dns.quad9.net 2620:fe::fe#dns.quad9.net 2620:fe::9#dns.quad9.net
 
-    # Default: 
+# Default: 
 
-    FallbackDNS=
+FallbackDNS=
+```
+Add primary IP address to DNS option
 
-  Add primary IP address to DNS option
+DNS=208.67.222.222
 
-    DNS=208.67.222.222
+Add secondary IP address to FallbackDNS option
 
-  Add secondary IP address to FallbackDNS option
-
-    FallbackDNS=208.67.220.220
+FallbackDNS=208.67.220.220
 
   The configuration should look like this
 
-    # DNS
+```
+# DNS
 
-    # Some examples of DNS servers which may be used for DNS= and FallbackDNS=:
-    # Cloudflare: 1.1.1.1#cloudflare-dns.com 1.0.0.1#cloudflare-dns.com 2606:4700:4700::1111#cloudflare-dns.com 2606:4700:4700::1001#cloudflare-dns.com
-    # Google:   8.8.8.8#dns.google 8.8.4.4#dns.google 2001:4860:4860::8888#dns.google 2001:4860:4860::8844#dns.google
-    # Quad9:   9.9.9.9#dns.quad9.net 149.112.112.112#dns.quad9.net 2620:fe::fe#dns.quad9.net 2620:fe::9#dns.quad9.net
+# Some examples of DNS servers which may be used for DNS= and FallbackDNS=:
+# Cloudflare: 1.1.1.1#cloudflare-dns.com 1.0.0.1#cloudflare-dns.com 2606:4700:4700::1111#cloudflare-dns.com 2606:4700:4700::1001#cloudflare-dns.com
+# Google:   8.8.8.8#dns.google 8.8.4.4#dns.google 2001:4860:4860::8888#dns.google 2001:4860:4860::8844#dns.google
+# Quad9:   9.9.9.9#dns.quad9.net 149.112.112.112#dns.quad9.net 2620:fe::fe#dns.quad9.net 2620:fe::9#dns.quad9.net
 
-    # Default: 
+# Default: 
 
-    DNS=208.67.222.222
+DNS=208.67.222.222
 
 
 
-    # FALLBACK DNS
+# FALLBACK DNS
 
-    # Some examples of DNS servers which may be used for DNS= and FallbackDNS=:
-    # Cloudflare: 1.1.1.1#cloudflare-dns.com 1.0.0.1#cloudflare-dns.com 2606:4700:4700::1111#cloudflare-dns.com 2606:4700:4700::1001#cloudflare-dns.com
-    # Google:   8.8.8.8#dns.google 8.8.4.4#dns.google 2001:4860:4860::8888#dns.google 2001:4860:4860::8844#dns.google
-    # Quad9:   9.9.9.9#dns.quad9.net 149.112.112.112#dns.quad9.net 2620:fe::fe#dns.quad9.net 2620:fe::9#dns.quad9.net
+# Some examples of DNS servers which may be used for DNS= and FallbackDNS=:
+# Cloudflare: 1.1.1.1#cloudflare-dns.com 1.0.0.1#cloudflare-dns.com 2606:4700:4700::1111#cloudflare-dns.com 2606:4700:4700::1001#cloudflare-dns.com
+# Google:   8.8.8.8#dns.google 8.8.4.4#dns.google 2001:4860:4860::8888#dns.google 2001:4860:4860::8844#dns.google
+# Quad9:   9.9.9.9#dns.quad9.net 149.112.112.112#dns.quad9.net 2620:fe::fe#dns.quad9.net 2620:fe::9#dns.quad9.net
 
-    # Default: 
+# Default: 
 
-    FallbackDNS=208.67.220.220
-
+FallbackDNS=208.67.220.220
+```
 Press `CTRL+X` to close, Press `Y` to save then press `ENTER` to confirm overwriting the existing file.
 
 Restart DNS Resolver service
 
-`sudo systemctl restart systemd-resolved`
+    sudo systemctl restart systemd-resolved
 
 Ping google.com to test DNS resolution
 
-`ping -c 3 google.com`
+    ping -c 3 google.com
 
 If DNS Resolution is working, you should see similar results
 
-    PING google.com (142.250.70.142) 56(84) bytes of data.
-    64 bytes from mel04s01-in-f14.1e100.net (142.250.70.142): icmp_seq=1 ttl=59 time=14.5 ms
-    64 bytes from mel04s01-in-f14.1e100.net (142.250.70.142): icmp_seq=2 ttl=59 time=15.2 ms
-    64 bytes from mel04s01-in-f14.1e100.net (142.250.70.142): icmp_seq=3 ttl=59 time=14.5 ms
+```
+PING google.com (142.250.70.142) 56(84) bytes of data.
+64 bytes from mel04s01-in-f14.1e100.net (142.250.70.142): icmp_seq=1 ttl=59 time=14.5 ms
+64 bytes from mel04s01-in-f14.1e100.net (142.250.70.142): icmp_seq=2 ttl=59 time=15.2 ms
+64 bytes from mel04s01-in-f14.1e100.net (142.250.70.142): icmp_seq=3 ttl=59 time=14.5 ms
 
-    --- google.com ping statistics ---
-    3 packets transmitted, 3 received, 0% packet loss, time 2002ms
-    rtt min/avg/max/mdev = 14.480/14.720/15.185/0.328 ms
-
+--- google.com ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2002ms
+rtt min/avg/max/mdev = 14.480/14.720/15.185/0.328 ms
+```
 :memo: **Note:** All other DNS resolver options will be set to resolved defaults
