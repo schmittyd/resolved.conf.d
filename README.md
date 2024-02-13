@@ -331,7 +331,7 @@ Edit /etc/systemd/resolved.conf.d/00-resolved-dns-fallback_dns.conf
 
     FallbackDNS=208.67.220.220
 
-Press `CTRL+C` to close, Press `Y` to save then press `ENTER` to confirm overwriting the existing file.
+Press `CTRL+X` to close, Press `Y` to save then press `ENTER` to confirm overwriting the existing file.
 
 Restart DNS Resolver service
 
