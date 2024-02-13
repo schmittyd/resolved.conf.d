@@ -219,14 +219,10 @@ Example using Cloudflare's DNS & Fallback DNS servers
 ```console
 cp -v 00-resolved-dns-fallback_dns-cloudflare.conf /etc/systemd/resolved.conf.d/00-resolved-dns-fallback_dns-cloudflare.conf
 ```
-
-or
-
+or *if required*
 ```console
 sudo cp -v 00-resolved-dns-fallback_dns-cloudflare.conf /etc/systemd/resolved.conf.d/00-resolved-dns-fallback_dns-cloudflare.conf
 ```
-*if required*
-
 
 Restart DNS Resolver service
 
@@ -269,13 +265,10 @@ Example using Cloudflare's DNS & Fallback DNS servers as highest priorty and Goo
 ```console
 cp -v 00-resolved-dns-fallback_dns-cloudflare.conf /etc/systemd/resolved.conf.d/00-resolved-dns-fallback_dns-cloudflare.conf && cp -v 00-resolved-dns-fallback_dns-google.conf /etc/systemd/resolved.conf.d/01-resolved-dns-fallback_dns-google.conf
 ```
-
-or
-
+or *if required*
 ```console
 sudo cp -v 00-resolved-dns-fallback_dns-cloudflare.conf /etc/systemd/resolved.conf.d/00-resolved-dns-fallback_dns-cloudflare.conf && sudo cp -v 00-resolved-dns-fallback_dns-google.conf /etc/systemd/resolved.conf.d/01-resolved-dns-fallback_dns-google.conf
 ```
-*if required*
 
 Restart DNS Resolver service
 
@@ -310,18 +303,16 @@ rtt min/avg/max/mdev = 14.480/14.720/15.185/0.328 ms
 ```console
 cp -v 00-resolved-dns-fallback_dns.conf /etc/systemd/resolved.conf.d/00-resolved-dns-fallback_dns.conf
 ```
-
-or
-
+or *if required*
 ```console
 sudo cp -v 00-resolved-dns-fallback_dns.conf /etc/systemd/resolved.conf.d/00-resolved-dns-fallback_dns.conf
 ```
 
- *if required*
-
 Edit /etc/systemd/resolved.conf.d/00-resolved-dns-fallback_dns.conf
 
-    sudo nano /etc/systemd/resolved.conf.d/00-resolved-dns-fallback_dns.conf
+```console
+sudo nano /etc/systemd/resolved.conf.d/00-resolved-dns-fallback_dns.conf
+```
 
 ```
 # DNS
@@ -386,11 +377,15 @@ Press `CTRL+X` to close, Press `Y` to save then press `ENTER` to confirm overwri
 
 Restart DNS Resolver service
 
-    sudo systemctl restart systemd-resolved
+```console
+sudo systemctl restart systemd-resolved
+```
 
 Ping google.com to test DNS resolution
 
-    ping -c 3 google.com
+```console
+ping -c 3 google.com
+```
 
 If DNS Resolution is working, you should see similar results
 
